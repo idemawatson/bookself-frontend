@@ -1,0 +1,50 @@
+{
+  "name": "majireco",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint --dir src",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
+    "prisma:generate": "prisma generate"
+  },
+  "dependencies": {
+    "@auth0/auth0-react": "^2.0.0",
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
+    "@hookform/resolvers": "^2.9.9",
+    "@mui/icons-material": "^5.5.1",
+    "@mui/material": "^5.10.8",
+    "@supabase/supabase-js": "^1.35.7",
+    "@types/jsonwebtoken": "^8.5.9",
+    "axios": "^0.26.1",
+    "dayjs": "^1.11.6",
+    "jsonwebtoken": "^8.5.1",
+    "make-error-cause": "^2.3.0",
+    "next": "12.3.1",
+    "next-pwa": "^5.6.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-error-boundary": "^3.1.4",
+    "react-hook-form": "^7.37.0",
+    "recharts": "^2.2.0",
+    "shallow-equal-object": "^1.1.1",
+    "swr": "^1.2.2",
+    "uuidv4": "^6.2.13",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@prisma/client": "^4.8.1",
+    "@types/node": "18.7.23",
+    "@types/react": "18.0.21",
+    "@types/react-dom": "18.0.6",
+    "eslint": "8.24.0",
+    "eslint-config-next": "12.3.1",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.6.1",
+    "prisma": "^4.8.1",
+    "typescript": "4.8.4"
+  }
+}
