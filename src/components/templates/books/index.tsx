@@ -1,11 +1,11 @@
+import SkeletonBooksPage from '@/components/organisms/books/SkeletonBooksPage'
 import { FC, Suspense } from 'react'
-import Loading from './loading'
 import Presenter from './presenter'
 
 const Page: FC = () => {
   return (
     <>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<SkeletonBooksPage></SkeletonBooksPage>}>
         <Presenter />
       </Suspense>
     </>
