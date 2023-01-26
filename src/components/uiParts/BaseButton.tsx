@@ -8,6 +8,7 @@ type Props = {
   disabled?: boolean
   size?: 'large' | 'medium' | 'small'
   sx?: any
+  className?: string
   children: ReactNode
 }
 
@@ -18,6 +19,7 @@ export const BaseButton: FC<Props> = ({
   disabled,
   size,
   sx,
+  className,
   children,
 }) => {
   return submit ? (
@@ -29,6 +31,7 @@ export const BaseButton: FC<Props> = ({
       disabled={disabled}
       size={size}
       sx={sx}
+      className={className}
       onClick={onClick}
     >
       {children}
@@ -41,6 +44,7 @@ export const BaseButton: FC<Props> = ({
       disabled={disabled}
       size={size}
       sx={sx}
+      className={className}
       onClick={onClick}
     >
       {children}

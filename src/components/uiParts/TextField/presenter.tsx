@@ -1,7 +1,6 @@
 import {
   FormControl,
   FormHelperText,
-  InputAdornment,
   styled,
   TextField as MUITextField,
   // eslint-disable-next-line
