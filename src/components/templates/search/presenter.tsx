@@ -16,10 +16,20 @@ import { FC, useState } from 'react'
 
 import { Search } from '@mui/icons-material'
 import { useSearchBook } from '@/hooks/useSearchBook'
+import BookCard from '@/components/uiParts/BookCard'
+import { ClientBook } from '@/types/BooksResponse'
+import getBackendAPIServiceClient from '@/libs/APIServiceClient/BackendAPIServiceClient'
+import { useToken } from '@/hooks/useAccessToken'
+import { useLoading } from '@/components/uiParts/TheLoading/hooks'
+import { useNotification } from '@/components/uiParts/TheNotificationToast/hooks'
+import axios from 'axios'
 
 type Props = {}
 
 const SearchPresenter: FC<Props> = ({}) => {
+  const { token } = useToken()
+  const { showLoading, hideLoading } = useLoading()
+  const { showSuccess, showError } = useNotification()
   const [userInput, setUserInput] = useState('')
   const [searchWord, setSearchWord] = useState('')
   const { data } = useSearchBook(searchWord)
@@ -27,6 +37,21 @@ const SearchPresenter: FC<Props> = ({}) => {
   const search = ($event: React.FormEvent<HTMLFormElement>) => {
     $event.preventDefault()
     setSearchWord(userInput)
+  }
+  const openConfirm = async (book: ClientBook) => {
+    try {
+      showLoading()
+      const client = getBackendAPIServiceClient(token)
+      await client.post('/books', book)
+      showSuccess('本棚に追加しました')
+    } catch (err) {
+      console.error(err)
+      if (axios.isAxiosError(err) && err.response?.data.title) {
+        showError(err.response?.data.title)
+      }
+    } finally {
+      hideLoading()
+    }
   }
   return (
     <>
@@ -60,12 +85,10 @@ const SearchPresenter: FC<Props> = ({}) => {
               }}
             />
           )}
-          {data?.map((book, index) => (
-            <Card elevation={0} key={index} sx={{ my: '8px' }}>
-              <CardContent>
-                <Typography>{JSON.stringify(book)}</Typography>
-              </CardContent>
-            </Card>
+          {data?.map((book) => (
+            <Box sx={{ my: 1 }} key={book.id}>
+              <BookCard {...book} handleOnClick={() => openConfirm(book)}></BookCard>
+            </Box>
           ))}
         </Box>
       </Container>

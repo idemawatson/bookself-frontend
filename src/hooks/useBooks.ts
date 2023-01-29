@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import getBackendAPIServiceClient from '@/libs/APIServiceClient/BackendAPIServiceClient'
 import { useToken } from './useAccessToken'
-import BooksResponse from '@/types/BooksResponse'
+import { BooksResponse } from '@/types/BooksResponse'
 
 export const useBooks = (page: number) => {
   const { token } = useToken()
