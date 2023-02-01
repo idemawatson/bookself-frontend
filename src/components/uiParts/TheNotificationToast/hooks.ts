@@ -11,9 +11,7 @@ type Props = {
 const useNotificationSWR = (initialData: Props): [Props, (state: Props) => void] => {
   const { data: state, mutate: setState } = useSWR('notification', null, {
     fallbackData: initialData,
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
+    revalidateIfStale: true,
   })
   return [state as Props, setState]
 }

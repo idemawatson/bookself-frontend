@@ -14,12 +14,12 @@ export const TheLoading: FC = () => {
 
   const { loading } = useLoading()
 
-  if (loading)
+  if (loading) {
     return (
       <>
         <LinearProgress />
         <DisabledBackground />
       </>
     )
-  else return <></>
+  } else return <></>
 }

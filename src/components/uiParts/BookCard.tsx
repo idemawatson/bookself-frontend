@@ -2,13 +2,16 @@ import { ClientBook } from '@/types/BooksResponse'
 import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@mui/material'
 import { FC } from 'react'
 
-type Props = ClientBook & {
-  handleOnClick: () => void
+type Props = {
+  book: ClientBook
+  handleOnClick: (book: ClientBook) => void
 }
-const BookCard: FC<Props> = (props) => {
+const BookCard: FC<Props> = ({ book, handleOnClick }) => {
   const cardImage = () => {
-    if (props.imageUrl)
-      return <CardMedia component='img' image={props.imageUrl} sx={{ height: '100%' }} />
+    if (book.imageUrl)
+      return (
+        <CardMedia component='img' image={book.imageUrl} sx={{ height: '100%', width: '100%' }} />
+      )
     return (
       <Box
         sx={{
@@ -27,22 +30,22 @@ const BookCard: FC<Props> = (props) => {
   const captionFontSize = '12px'
   return (
     <>
-      <Card elevation={0} onClick={props.handleOnClick}>
+      <Card elevation={0} onClick={() => handleOnClick(book)}>
         <CardActionArea>
           <Grid container>
             <Grid item xs={7}>
               <CardContent sx={{ flex: '1 0 auto' }}>
-                <Typography sx={{ fontWeight: 'bold' }}>{props.title}</Typography>
+                <Typography sx={{ fontWeight: 'bold' }}>{book.title}</Typography>
                 <Typography variant='subtitle1' sx={{ fontSize: captionFontSize }}>
-                  <span style={{ fontWeight: 'bold' }}>著者</span>: {props.author}
+                  <span style={{ fontWeight: 'bold' }}>著者</span>: {book.author}
                 </Typography>
                 <Typography variant='subtitle1' sx={{ fontSize: captionFontSize }}>
-                  <span style={{ fontWeight: 'bold' }}>発行日</span>: {props.publishedDate}
+                  <span style={{ fontWeight: 'bold' }}>発行日</span>: {book.publishedDate}
                 </Typography>
                 <Typography variant='subtitle1' sx={{ fontSize: captionFontSize }}>
-                  <span style={{ fontWeight: 'bold' }}>ページ数</span>: {props.pageCount}
+                  <span style={{ fontWeight: 'bold' }}>ページ数</span>: {book.pageCount}
                 </Typography>
-                <div style={{ fontSize: captionFontSize }}>{props.description}</div>
+                <div style={{ fontSize: captionFontSize }}>{book.description}</div>
               </CardContent>
             </Grid>
             <Grid item xs={5} sx={{ minHeight: 200 }}>
