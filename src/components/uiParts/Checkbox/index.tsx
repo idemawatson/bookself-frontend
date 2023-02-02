@@ -6,31 +6,26 @@ import {
   UseControllerProps,
 } from 'react-hook-form'
 
-import { TextField, TextFieldProps } from '@/components/uiParts/TextField/presenter'
+import { Checkbox, CheckboxProps } from '@/components/uiParts/Checkbox/presenter'
 
-export type RhfTextFieldProps<T extends FieldValues> = TextFieldProps & UseControllerProps<T>
+export type RhfCheckboxProps<T extends FieldValues> = CheckboxProps & UseControllerProps<T>
 
 /**
  * react-hook-formラッパー
  */
-export const RhfTextField = <T extends FieldValues>(props: RhfTextFieldProps<T>) => {
-  const { name, control, placeholder, className, type, label, endAdornment, multiline, rows } =
-    props
+export const RhfCheckbox = <T extends FieldValues>(props: RhfCheckboxProps<T>) => {
+  const { name, control, placeholder, label, className } = props
   const {
     field: { ref, ...rest },
     formState: { errors },
   } = useController<T>({ name, control })
 
   return (
-    <TextField
+    <Checkbox
       inputRef={ref}
       className={className}
       placeholder={placeholder}
       label={label}
-      type={type}
-      endAdornment={endAdornment}
-      multiline={multiline}
-      rows={rows}
       {...rest}
       error={errors[name] && `${(errors[name] as DeepMap<FieldValues, FieldError>).message}`}
     />

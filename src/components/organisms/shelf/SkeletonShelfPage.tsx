@@ -1,5 +1,5 @@
 import { Container, Grid, Skeleton } from '@mui/material'
-import dayjs from 'dayjs'
+import dayjs from '@/libs/importDayjs'
 import { FC } from 'react'
 
 const SkeletonShelfPage: FC = () => {

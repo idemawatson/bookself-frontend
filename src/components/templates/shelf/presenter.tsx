@@ -3,7 +3,7 @@ import Carousel from 'react-material-ui-carousel'
 import { FC, Suspense, useState } from 'react'
 import ShelfPage from '@/components/organisms/shelf/ShelfPage'
 import SkeletonShelfPage from '@/components/organisms/shelf/SkeletonShelfPage'
-import dayjs from 'dayjs'
+import dayjs from '@/libs/importDayjs'
 
 type Props = {}
 

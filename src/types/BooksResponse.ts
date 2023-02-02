@@ -1,3 +1,5 @@
+import { BOOK_STATUS } from './IBookUpdateForm'
+
 export type BooksResponse = {
   books: ClientBook[]
   meta: {
@@ -12,5 +14,8 @@ export type ClientBook = {
   publishedAt?: string
   imageUrl?: string
   pageCount: number
+  comment: string
+  status: typeof BOOK_STATUS[number]
+  completedAt: string
   description: string
 }

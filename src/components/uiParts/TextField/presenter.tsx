@@ -14,6 +14,8 @@ export type TextFieldProps = {
   placeholder?: string
   label?: string
   type?: string
+  multiline?: boolean
+  rows?: number
   endAdornment?: ReactNode
 }
 
@@ -39,6 +41,8 @@ export const TextField = (
           inputRef={props.inputRef}
           value={props.value}
           type={props.type}
+          multiline={props.multiline}
+          rows={props.rows}
           onChange={props.onChange}
           onBlur={props.onBlur}
           InputProps={{
