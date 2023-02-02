@@ -4,7 +4,7 @@ import { FC } from 'react'
 
 type Props = {
   book: ClientBook
-  handleOnClick: (book: ClientBook) => void
+  handleOnClick?: (book: ClientBook) => void
 }
 const BookCard: FC<Props> = ({ book, handleOnClick }) => {
   const cardImage = () => {
@@ -30,7 +30,7 @@ const BookCard: FC<Props> = ({ book, handleOnClick }) => {
   const captionFontSize = '12px'
   return (
     <>
-      <Card elevation={0} onClick={() => handleOnClick(book)}>
+      <Card elevation={0} onClick={handleOnClick ? () => handleOnClick(book) : undefined}>
         <CardActionArea>
           <Grid container>
             <Grid item xs={7}>
@@ -40,7 +40,7 @@ const BookCard: FC<Props> = ({ book, handleOnClick }) => {
                   <span style={{ fontWeight: 'bold' }}>著者</span>: {book.author}
                 </Typography>
                 <Typography variant='subtitle1' sx={{ fontSize: captionFontSize }}>
-                  <span style={{ fontWeight: 'bold' }}>発行日</span>: {book.publishedDate}
+                  <span style={{ fontWeight: 'bold' }}>発行日</span>: {book.publishedAt}
                 </Typography>
                 <Typography variant='subtitle1' sx={{ fontSize: captionFontSize }}>
                   <span style={{ fontWeight: 'bold' }}>ページ数</span>: {book.pageCount}

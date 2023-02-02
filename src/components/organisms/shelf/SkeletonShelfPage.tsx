@@ -1,12 +1,14 @@
 import { Container, Grid, Skeleton } from '@mui/material'
+import dayjs from 'dayjs'
 import { FC } from 'react'
 
-const SkeletonBooksPage: FC = () => {
+const SkeletonShelfPage: FC = () => {
+  const timestamp = dayjs().toISOString()
   return (
     <Container>
       <Grid container>
-        {[...Array(12)].map((i) => (
-          <Grid item xs={4} key={i} sx={{ padding: '4px' }}>
+        {[...Array(12)].map((_, i) => (
+          <Grid item xs={4} key={`${timestamp}_${i}`} sx={{ padding: '4px' }}>
             <Skeleton variant='rectangular' height={164} />
           </Grid>
         ))}
@@ -15,4 +17,4 @@ const SkeletonBooksPage: FC = () => {
   )
 }
 
-export default SkeletonBooksPage
+export default SkeletonShelfPage

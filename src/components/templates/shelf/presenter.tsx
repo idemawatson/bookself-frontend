@@ -1,14 +1,16 @@
 import { useBooks } from '@/hooks/useBooks'
 import Carousel from 'react-material-ui-carousel'
 import { FC, Suspense, useState } from 'react'
-import BooksPage from '@/components/organisms/books/BooksPage'
-import SkeletonBooksPage from '@/components/organisms/books/SkeletonBooksPage'
+import ShelfPage from '@/components/organisms/shelf/ShelfPage'
+import SkeletonShelfPage from '@/components/organisms/shelf/SkeletonShelfPage'
+import dayjs from 'dayjs'
 
 type Props = {}
 
 const Presenter: FC<Props> = ({}) => {
   const [currentPage, setCurrentPage] = useState(1)
   const { data } = useBooks(currentPage)
+  const timestamp = dayjs().toISOString()
 
   if (!data) return <></>
 
@@ -16,10 +18,10 @@ const Presenter: FC<Props> = ({}) => {
     setCurrentPage(page ? page + 1 : 1)
   }
 
-  const BooksPageWithSuspense = () => {
+  const ShelfPageWithSuspense = () => {
     return (
-      <Suspense fallback={<SkeletonBooksPage />}>
-        <BooksPage page={currentPage} />
+      <Suspense fallback={<SkeletonShelfPage />}>
+        <ShelfPage page={currentPage} />
       </Suspense>
     )
   }
@@ -27,8 +29,8 @@ const Presenter: FC<Props> = ({}) => {
   return (
     <>
       <Carousel onChange={onChangeCarousel} autoPlay={false}>
-        {[...Array(data.total_pages)].map((_, i) => (
-          <BooksPageWithSuspense key={i} />
+        {[...Array(data.meta.totalPages)].map((_, i) => (
+          <ShelfPageWithSuspense key={`${timestamp}_${i}`} />
         ))}
       </Carousel>
     </>

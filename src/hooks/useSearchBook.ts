@@ -20,7 +20,7 @@ export const useSearchBook = (searchWord: string) => {
         title: volumeInfo.title || '',
         author: volumeInfo.authors?.join(',') || '',
         imageUrl: volumeInfo.imageLinks?.smallThumbnail || '',
-        publishedDate: volumeInfo.publishedDate || '',
+        publishedAt: volumeInfo.publishedDate || '',
         pageCount: volumeInfo.pageCount || 0,
         description: getDescription(volumeInfo.description),
       }
