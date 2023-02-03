@@ -10,7 +10,7 @@ export type SelectFieldProps = MUISelectProps & {
   inputRef?: MUISelectProps['ref']
   errorMessage?: string
   selectPropsList: SelectProps[]
-  selectedValue: string
+  selectedValue: string | number
 }
 
 const StyledFormControl = styled(FormControl)({

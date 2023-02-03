@@ -1,10 +1,10 @@
-import { ClientBook } from '@/types/BooksResponse'
+import { SearchBook } from '@/types/BooksResponse'
 import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@mui/material'
 import { FC } from 'react'
 
 type Props = {
-  book: ClientBook
-  handleOnClick?: (book: ClientBook) => void
+  book: SearchBook
+  handleOnClick?: (book: SearchBook) => void
 }
 const BookCard: FC<Props> = ({ book, handleOnClick }) => {
   const cardImage = () => {

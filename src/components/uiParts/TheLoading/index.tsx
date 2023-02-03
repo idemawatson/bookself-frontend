@@ -9,7 +9,7 @@ export const TheLoading: FC = () => {
     position: 'fixed',
     background: '#ccc',
     opacity: 0.5,
-    zIndex: 1000,
+    zIndex: 10000,
   })
 
   const { loading } = useLoading()

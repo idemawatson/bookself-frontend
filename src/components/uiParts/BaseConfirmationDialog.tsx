@@ -11,7 +11,7 @@ type Props = {
 }
 const BaseConfirmationDialog: FC<Props> = ({ open, title, children, handleClose, handleAgree }) => {
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={open} onClose={handleClose} fullWidth>
       <DialogTitle id='alert-dialog-title'>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>

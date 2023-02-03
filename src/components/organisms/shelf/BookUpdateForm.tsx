@@ -1,24 +1,17 @@
+import { RhfDatePicker } from '@/components/uiParts/DatePicker'
+import { RhfSelectField } from '@/components/uiParts/SelectField'
 import { RhfTextField } from '@/components/uiParts/TextField'
-import { IBookUpdateForm, BOOK_STATUS } from '@/types/IBookUpdateForm'
+import { BOOK_STATUS, IBookUpdateForm } from '@/types/IBookForm'
 import { Grid } from '@mui/material'
 import { FC, useEffect } from 'react'
 import { Control, UseFormSetValue, UseFormWatch } from 'react-hook-form'
-
-import { RhfDatePicker } from '@/components/uiParts/DatePicker'
-import { RhfSelectField } from '@/components/uiParts/SelectField'
+import { STATUS_SELECTIONS } from '../search/BookAddConfirmationDialog'
 
 type Props = {
   control: Control<IBookUpdateForm, any>
   watch: UseFormWatch<IBookUpdateForm>
   setValue: UseFormSetValue<IBookUpdateForm>
 }
-
-const STATUS_SELECTIONS = [
-  { text: '読みたい', value: 0 },
-  { text: '積読', value: 1 },
-  { text: '読んでる', value: 2 },
-  { text: '読んだ！', value: 3 },
-]
 
 const BookUpdateForm: FC<Props> = ({ control, watch, setValue }) => {
   const isCompleted = watch('status', BOOK_STATUS[0]) === BOOK_STATUS[3]
@@ -29,8 +22,8 @@ const BookUpdateForm: FC<Props> = ({ control, watch, setValue }) => {
   }, [isCompleted])
   return (
     <>
-      <Grid container>
-        <Grid xs={6} item sx={{ pr: 1 }}>
+      <Grid container columnSpacing={1}>
+        <Grid item xs={6}>
           <RhfSelectField
             name='status'
             control={control}
@@ -38,14 +31,9 @@ const BookUpdateForm: FC<Props> = ({ control, watch, setValue }) => {
             selectPropsList={STATUS_SELECTIONS}
           />
         </Grid>
-        <Grid xs={6} item>
+        <Grid item xs={6}>
           {isCompleted && (
-            <RhfDatePicker
-              label='読んだ日付'
-              name='completedAt'
-              disableFuture
-              control={control}
-            ></RhfDatePicker>
+            <RhfDatePicker label='読んだ日付' name='completedAt' disableFuture control={control} />
           )}
         </Grid>
         <Grid xs={12} sx={{ my: 1 }} item>

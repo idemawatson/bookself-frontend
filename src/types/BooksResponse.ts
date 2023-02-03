@@ -1,4 +1,4 @@
-import { BOOK_STATUS } from './IBookUpdateForm'
+import { BOOK_STATUS } from './IBookForm'
 
 export type BooksResponse = {
   books: ClientBook[]
@@ -7,15 +7,18 @@ export type BooksResponse = {
   }
 }
 
-export type ClientBook = {
+export type SearchBook = {
   id: string
   title: string
   author?: string
   publishedAt?: string
   imageUrl?: string
   pageCount: number
-  comment: string
-  status: typeof BOOK_STATUS[number]
-  completedAt: string
   description: string
+}
+
+export type ClientBook = SearchBook & {
+  comment?: string
+  status: typeof BOOK_STATUS[number]
+  completedAt?: string
 }

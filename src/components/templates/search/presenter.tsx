@@ -3,7 +3,7 @@ import { FC, useState } from 'react'
 
 import { useSearchBook } from '@/hooks/useSearchBook'
 import BookCard from '@/components/uiParts/BookCard'
-import { ClientBook } from '@/types/BooksResponse'
+import { SearchBook } from '@/types/BooksResponse'
 import BookAddConfirmationDialog from '@/components/organisms/search/BookAddConfirmationDialog'
 import SearchBookForm from '@/components/organisms/search/SearchBookForm'
 
@@ -12,7 +12,7 @@ const INDICATOR_SIZE = 40
 const SearchPresenter: FC = () => {
   const [userInput, setUserInput] = useState('')
   const [searchWord, setSearchWord] = useState('')
-  const [selectedBook, setSelectedBook] = useState<ClientBook | undefined>(undefined)
+  const [selectedBook, setSelectedBook] = useState<SearchBook | undefined>(undefined)
 
   const { data } = useSearchBook(searchWord)
 
@@ -21,7 +21,7 @@ const SearchPresenter: FC = () => {
     setSearchWord(userInput)
   }
 
-  const openConfirm = (book: ClientBook) => {
+  const openConfirm = (book: SearchBook) => {
     setSelectedBook(book)
   }
 

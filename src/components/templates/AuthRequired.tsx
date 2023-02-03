@@ -1,4 +1,4 @@
-import { useToken } from '@/hooks/useAccessToken'
+import { useToken } from '@/hooks/staticSWR/useAccessToken'
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
 import { useRouter } from 'next/router'
 import { FC, ReactNode, useEffect } from 'react'

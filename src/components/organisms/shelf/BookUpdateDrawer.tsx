@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import BookCard from '@/components/uiParts/BookCard'
 import { BooksResponse, ClientBook } from '@/types/BooksResponse'
-import { IBookUpdateForm, BOOK_STATUS, schema } from '@/types/IBookUpdateForm'
+import { IBookUpdateForm, BOOK_STATUS, bookUpdateSchema } from '@/types/IBookForm'
 import { Box, Button, Grid, SwipeableDrawer } from '@mui/material'
 import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
@@ -11,86 +11,104 @@ import { useLoading } from '@/components/uiParts/TheLoading/hooks'
 import { useNotification } from '@/components/uiParts/TheNotificationToast/hooks'
 import dayjs from '@/libs/importDayjs'
 import getBackendAPIServiceClient from '@/libs/APIServiceClient/BackendAPIServiceClient'
-import { useToken } from '@/hooks/useAccessToken'
+import { useToken } from '@/hooks/staticSWR/useAccessToken'
 import { BookUpdateRequest } from '@/types/request/BookUpdateRequest'
 import { KeyedMutator } from 'swr'
+import { useSelectedBook } from '@/hooks/staticSWR/useSelectedBook'
+import axios from 'axios'
 
 type Props = {
   open: boolean
   setOpen: (value: boolean) => void
-  book?: ClientBook
   mutate: KeyedMutator<BooksResponse>
 }
 
-const BookUpdateDrawer: FC<Props> = ({ open, setOpen, book, mutate }) => {
+const BookUpdateDrawer: FC<Props> = ({ open, setOpen, mutate }) => {
   const { showLoading, hideLoading } = useLoading()
   const { showSuccess, showError } = useNotification()
+  const { selectedBook: book } = useSelectedBook()
   const { token } = useToken()
-  const {
-    handleSubmit,
-    control,
-    watch,
-    setValue,
-    formState: { isValid },
-    reset,
-  } = useForm<IBookUpdateForm>({
+  const formMethods = useForm<IBookUpdateForm>({
     mode: 'onChange',
-    resolver: yupResolver(schema),
+    resolver: yupResolver(bookUpdateSchema),
   })
   useEffect(() => {
     if (book) {
-      setValue('comment', book.comment || '')
-      setValue('status', book.status)
-      setValue('completedAt', dayjs(book?.completedAt).toDate())
+      formMethods.setValue('comment', book.comment || '')
+      formMethods.setValue('status', book.status)
+      formMethods.setValue('completedAt', dayjs(book?.completedAt).toDate())
     }
   }, [book])
 
-  if (!book) return <></>
   const close = () => {
-    reset()
     setOpen(false)
   }
+
   const update = async (form: IBookUpdateForm) => {
     try {
+      if (!book) return
       showLoading()
       const req = {
         ...form,
-        completedAt: form.status === BOOK_STATUS[3] ? dayjs(form.completedAt).toISOString() : null,
+        completedAt:
+          form.status === BOOK_STATUS[3] ? dayjs(form.completedAt).format('YYYY-MM-DD') : null,
       }
       await getBackendAPIServiceClient(token).put<BookUpdateRequest, any>(`/books/${book.id}`, req)
       showSuccess('更新しました')
       mutate()
       close()
-      reset()
     } catch (err) {
       console.error(err)
-      showError('エラー')
+      if (axios.isAxiosError(err) && err.response?.data.status === 404) {
+        showError('書籍が削除済です。')
+      } else {
+        showError('エラーが発生しました')
+      }
     } finally {
       hideLoading()
     }
   }
+
   return (
     <>
-      <SwipeableDrawer anchor='bottom' open={open} onOpen={() => setOpen(true)} onClose={close}>
+      <SwipeableDrawer
+        anchor='bottom'
+        open={open}
+        onOpen={() => setOpen(true)}
+        onClose={close}
+        sx={{ zIndex: 1000 }}
+      >
         <Box sx={{ p: 1 }}>
-          <BookCard book={book} />
-          <form onSubmit={handleSubmit(update)}>
-            <Box sx={{ p: 1, mt: 2 }}>
-              <BookUpdateForm control={control} watch={watch} setValue={setValue}></BookUpdateForm>
-            </Box>
-            <Grid container>
-              <Grid item xs={6} sx={{ textAlign: 'left' }}>
-                <Button disableElevation onClick={close}>
-                  閉じる
-                </Button>
-              </Grid>
-              <Grid item xs={6} sx={{ textAlign: 'right' }}>
-                <BaseButton submit={true} color='secondary' disabled={!isValid}>
-                  更新
-                </BaseButton>
-              </Grid>
-            </Grid>
-          </form>
+          {book && (
+            <>
+              <BookCard book={book} />
+              <form onSubmit={formMethods.handleSubmit(update)}>
+                <Box sx={{ p: 1, mt: 2 }}>
+                  <BookUpdateForm
+                    control={formMethods.control}
+                    watch={formMethods.watch}
+                    setValue={formMethods.setValue}
+                  ></BookUpdateForm>
+                </Box>
+                <Grid container>
+                  <Grid item xs={6} sx={{ textAlign: 'left' }}>
+                    <Button disableElevation onClick={close}>
+                      閉じる
+                    </Button>
+                  </Grid>
+                  <Grid item xs={6} sx={{ textAlign: 'right' }}>
+                    <BaseButton
+                      submit={true}
+                      color='secondary'
+                      disabled={!formMethods.formState.isValid}
+                    >
+                      更新
+                    </BaseButton>
+                  </Grid>
+                </Grid>
+              </form>
+            </>
+          )}
         </Box>
       </SwipeableDrawer>
     </>

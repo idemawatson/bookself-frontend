@@ -1,15 +1,10 @@
 import useSWR from 'swr'
 import GoogleAPIServiceClient from '@/libs/APIServiceClient/GoogleAPIServiceClient'
 import SearchBooksResponse from '@/types/SearchBooksResponse'
-import { ClientBook } from '@/types/BooksResponse'
-
-const getDescription = (description?: string) => {
-  if (!description) return ''
-  return description.length < 100 ? description : description?.substring(0, 69) + '...'
-}
+import { SearchBook } from '@/types/BooksResponse'
 
 export const useSearchBook = (searchWord: string) => {
-  const fetcher = async (url: string): Promise<ClientBook[]> => {
+  const fetcher = async (url: string): Promise<SearchBook[]> => {
     if (!searchWord) return []
     const res = await GoogleAPIServiceClient.get<SearchBooksResponse>(url)
     const items = res.data?.items || []
@@ -22,7 +17,7 @@ export const useSearchBook = (searchWord: string) => {
         imageUrl: volumeInfo.imageLinks?.smallThumbnail || '',
         publishedAt: volumeInfo.publishedDate || '',
         pageCount: volumeInfo.pageCount || 0,
-        description: getDescription(volumeInfo.description),
+        description: volumeInfo.description || '',
       }
     })
   }
