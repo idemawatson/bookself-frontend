@@ -1,13 +1,24 @@
 import { SearchBook } from '@/types/BooksResponse'
 import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@mui/material'
-import { FC } from 'react'
+import { FC, ReactElement } from 'react'
 
 type Props = {
   book: SearchBook
   handleOnClick?: (book: SearchBook) => void
 }
+
+const CAPTION_FONT_SIZE = '12px'
+
+const Caption = ({ children }: { children: ReactElement }) => {
+  return (
+    <Typography variant='subtitle1' sx={{ fontSize: CAPTION_FONT_SIZE }}>
+      {children}
+    </Typography>
+  )
+}
+
 const BookCard: FC<Props> = ({ book, handleOnClick }) => {
-  const cardImage = () => {
+  const renderCardImage = () => {
     if (book.imageUrl)
       return (
         <CardMedia component='img' image={book.imageUrl} sx={{ height: '100%', width: '100%' }} />
@@ -27,7 +38,10 @@ const BookCard: FC<Props> = ({ book, handleOnClick }) => {
       </Box>
     )
   }
-  const captionFontSize = '12px'
+  const getDescription = () => {
+    return book.description.length > 70 ? `${book.description.slice(0, 70)}...` : book.description
+  }
+
   return (
     <>
       <Card elevation={0} onClick={handleOnClick ? () => handleOnClick(book) : undefined}>
@@ -35,21 +49,31 @@ const BookCard: FC<Props> = ({ book, handleOnClick }) => {
           <Grid container>
             <Grid item xs={7}>
               <CardContent sx={{ flex: '1 0 auto' }}>
-                <Typography sx={{ fontWeight: 'bold' }}>{book.title}</Typography>
-                <Typography variant='subtitle1' sx={{ fontSize: captionFontSize }}>
-                  <span style={{ fontWeight: 'bold' }}>著者</span>: {book.author}
-                </Typography>
-                <Typography variant='subtitle1' sx={{ fontSize: captionFontSize }}>
-                  <span style={{ fontWeight: 'bold' }}>発行日</span>: {book.publishedAt}
-                </Typography>
-                <Typography variant='subtitle1' sx={{ fontSize: captionFontSize }}>
-                  <span style={{ fontWeight: 'bold' }}>ページ数</span>: {book.pageCount}
-                </Typography>
-                <div style={{ fontSize: captionFontSize }}>{book.description}</div>
+                <Caption>
+                  <span style={{ fontWeight: 'bold' }}>{book.title}</span>
+                </Caption>
+                <Caption>
+                  <>
+                    <span style={{ fontWeight: 'bold' }}>著者</span>: {book.author}
+                  </>
+                </Caption>
+                <Caption>
+                  <>
+                    <span style={{ fontWeight: 'bold' }}>発行日</span>: {book.publishedAt}
+                  </>
+                </Caption>
+                <Caption>
+                  <>
+                    <span style={{ fontWeight: 'bold' }}>ページ数</span>: {book.pageCount}
+                  </>
+                </Caption>
+                <Caption>
+                  <span>{getDescription()}</span>
+                </Caption>
               </CardContent>
             </Grid>
             <Grid item xs={5} sx={{ minHeight: 200 }}>
-              {cardImage()}
+              {renderCardImage()}
             </Grid>
           </Grid>
         </CardActionArea>
