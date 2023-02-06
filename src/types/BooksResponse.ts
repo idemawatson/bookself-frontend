@@ -1,12 +1,5 @@
 import { BOOK_STATUS } from './IBookForm'
 
-export type BooksResponse = {
-  books: ClientBook[]
-  meta: {
-    totalPages: number
-  }
-}
-
 export type SearchBook = {
   id: string
   title: string
