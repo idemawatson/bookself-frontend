@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import BookCard from '@/components/uiParts/BookCard'
-import { BooksResponse, ClientBook } from '@/types/BooksResponse'
+import { ClientBook } from '@/types/BooksResponse'
 import { IBookUpdateForm, BOOK_STATUS, bookUpdateSchema } from '@/types/IBookForm'
 import { Box, Button, Grid, SwipeableDrawer } from '@mui/material'
 import { FC, useEffect } from 'react'
@@ -20,7 +20,7 @@ import axios from 'axios'
 type Props = {
   open: boolean
   setOpen: (value: boolean) => void
-  mutate: KeyedMutator<BooksResponse>
+  mutate: KeyedMutator<ClientBook[][]>
 }
 
 const BookUpdateDrawer: FC<Props> = ({ open, setOpen, mutate }) => {
@@ -88,7 +88,7 @@ const BookUpdateDrawer: FC<Props> = ({ open, setOpen, mutate }) => {
                     control={formMethods.control}
                     watch={formMethods.watch}
                     setValue={formMethods.setValue}
-                  ></BookUpdateForm>
+                  />
                 </Box>
                 <Grid container>
                   <Grid item xs={6} sx={{ textAlign: 'left' }}>

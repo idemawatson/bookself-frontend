@@ -10,6 +10,7 @@ import { TheLoading } from '@/components/uiParts/TheLoading'
 import { TheNotificationToast } from '@/components/uiParts/TheNotificationToast'
 import { Auth0Provider } from '@auth0/auth0-react'
 import { useRouter } from 'next/router'
+import MyThemeProvider from '@/components/uiParts/MyThemeProvider'
 
 type NextPageWithLayout = NextPage & {
   layout?: typeof MainLayout
@@ -34,13 +35,15 @@ const MyApp: FC<AppPropsWithLayout> = ({ Component, pageProps }: AppPropsWithLay
         onRedirectCallback={(appState) => router.push(appState?.returnTo || 'books')}
       >
         <CssBaseline>
-          <Layout>
-            <TheLoading />
-            <TheNotificationToast />
-            <ErrorBoundary FallbackComponent={ErrorFallback}>
-              <Component {...pageProps} />
-            </ErrorBoundary>
-          </Layout>
+          <MyThemeProvider>
+            <Layout>
+              <TheLoading />
+              <TheNotificationToast />
+              <ErrorBoundary FallbackComponent={ErrorFallback}>
+                <Component {...pageProps} />
+              </ErrorBoundary>
+            </Layout>
+          </MyThemeProvider>
         </CssBaseline>
       </Auth0Provider>
     </>

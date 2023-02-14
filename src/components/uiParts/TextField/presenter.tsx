@@ -17,6 +17,7 @@ export type TextFieldProps = {
   multiline?: boolean
   rows?: number
   endAdornment?: ReactNode
+  startAdornment?: ReactNode
 }
 
 const StyledFormControl = styled(FormControl)({
@@ -47,6 +48,7 @@ export const TextField = (
           onBlur={props.onBlur}
           InputProps={{
             endAdornment: props.endAdornment,
+            startAdornment: props.startAdornment,
           }}
         />
       </StyledFormControl>
