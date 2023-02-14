@@ -4,7 +4,7 @@ import { FC, ReactNode } from 'react'
 type Props = {
   onClick?: () => void
   submit?: boolean
-  color: 'primary' | 'secondary' | 'error'
+  color: 'inherit' | 'primary' | 'secondary' | 'error' | 'success' | 'info' | 'warning'
   disabled?: boolean
   size?: 'large' | 'medium' | 'small'
   sx?: any
@@ -22,22 +22,9 @@ export const BaseButton: FC<Props> = ({
   className,
   children,
 }) => {
-  return submit ? (
+  return (
     <Button
-      type='submit'
-      variant='contained'
-      disableElevation
-      color={color}
-      disabled={disabled}
-      size={size}
-      sx={sx}
-      className={className}
-      onClick={onClick}
-    >
-      {children}
-    </Button>
-  ) : (
-    <Button
+      type={submit ? 'submit' : undefined}
       variant='contained'
       disableElevation
       color={color}

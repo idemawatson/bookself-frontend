@@ -1,4 +1,4 @@
-import { AnalyticsOutlined, FormatListBulletedOutlined, Settings } from '@mui/icons-material'
+import { MenuBook, PermIdentity, Search } from '@mui/icons-material'
 import { Paper } from '@mui/material'
 import BottomNavigation from '@mui/material/BottomNavigation'
 import BottomNavigationAction from '@mui/material/BottomNavigationAction'
@@ -16,13 +16,9 @@ const LabelBottomNavigation: FC<Props> = ({ value, handleChange }) => {
   return (
     <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000 }}>
       <BottomNavigation sx={{ width: '100%' }} value={routeName} onChange={handleChange}>
-        <BottomNavigationAction
-          label='対局一覧'
-          value='games'
-          icon={<FormatListBulletedOutlined />}
-        />
-        <BottomNavigationAction label='統計' value='analytics' icon={<AnalyticsOutlined />} />
-        <BottomNavigationAction label='設定' value='settings' icon={<Settings />} />
+        <BottomNavigationAction label='本棚' value='shelf' icon={<MenuBook />} />
+        <BottomNavigationAction label='さがす' value='search' icon={<Search />} />
+        <BottomNavigationAction label='フォロー' value='follow' icon={<PermIdentity />} />
       </BottomNavigation>
     </Paper>
   )

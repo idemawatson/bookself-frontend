@@ -1,7 +1,17 @@
-export type ClientUser = {
+export type ClientUser = ClientProfile & {
+  restExperience: number
+  bookCount: number
+  progress: number
+  followings: ClientProfile[]
+  followers: ClientProfile[]
+  requestFollowers: ClientProfile[]
+}
+
+export type ClientProfile = {
   id: string
   name: string
   email: string
-  followings: ClientUser[]
-  followers: ClientUser[]
+  level: number
+  experience: number
+  following: boolean
 }

@@ -4,7 +4,7 @@ import { useNotification } from '@/components/uiParts/TheNotificationToast/hooks
 import { useToken } from '@/hooks/staticSWR/useAccessToken'
 import { useUser } from '@/hooks/useUser'
 import getBackendAPIServiceClient from '@/libs/APIServiceClient/BackendAPIServiceClient'
-import { Box, Divider, List, ListItem, ListItemText, Typography } from '@mui/material'
+import { Alert, AlertTitle, Box, Divider, List, ListItem, ListItemText } from '@mui/material'
 import React, { FC } from 'react'
 
 const FollowingList: FC = () => {
@@ -16,7 +16,7 @@ const FollowingList: FC = () => {
     try {
       showLoading()
       const client = getBackendAPIServiceClient(token)
-      await client.delete(`/follow?user_id=${user_id}`)
+      await client.delete(`/followings?user_id=${user_id}`)
       showSuccess('フォロー解除しました')
       mutate()
     } catch (error) {
@@ -30,13 +30,13 @@ const FollowingList: FC = () => {
   return (
     <Box sx={{ mx: 2 }}>
       {user.followings.length > 0 ? (
-        <List sx={{ bgcolor: 'background.paper' }}>
+        <List sx={{ bgcolor: 'background.paper', p: 0 }}>
           <>
             {user.followings.map((following, idx) => (
               <React.Fragment key={following.id}>
                 <ListItem alignItems='flex-start'>
                   <ListItemText primary={following.name} />
-                  <BaseButton color='primary' onClick={() => unfollow(following.id)}>
+                  <BaseButton color='secondary' onClick={() => unfollow(following.id)} size='small'>
                     フォロー解除
                   </BaseButton>
                 </ListItem>
@@ -46,7 +46,10 @@ const FollowingList: FC = () => {
           </>
         </List>
       ) : (
-        <Typography>誰もフォローしていません</Typography>
+        <Alert severity='info' sx={{ mt: 2 }}>
+          <AlertTitle>Info</AlertTitle>
+          <div>誰もフォローしていません</div>
+        </Alert>
       )}
     </Box>
   )
