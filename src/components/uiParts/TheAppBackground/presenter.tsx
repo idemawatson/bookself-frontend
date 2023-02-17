@@ -7,6 +7,7 @@ const Presenter: FC<{ children: ReactNode }> = ({ children }) => {
     <Box
       sx={{
         height: '100vh',
+        width: '100vw',
         overflow: 'auto',
         bgcolor: grey[200],
       }}
