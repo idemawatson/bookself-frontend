@@ -1,14 +1,19 @@
 import { TheAppBackground } from '@/components/uiParts/TheAppBackground'
 import TheOffset from '@/components/uiParts/TheOffset'
+import { useUser } from '@/hooks/useUser'
 import { ChevronLeft, InsertChart } from '@mui/icons-material'
 import { Divider, Paper, SwipeableDrawer, Tab, Tabs, Typography } from '@mui/material'
-import { FC, SyntheticEvent, useState } from 'react'
+import { FC, SyntheticEvent, useEffect, useState } from 'react'
 import ProfileTemplate from '../profile'
 
 type Props = {}
 const AnalyticsTemplate: FC<Props> = () => {
   const [open, setOpen] = useState(false)
   const [tab, setTab] = useState(0)
+  const { mutate } = useUser()
+  useEffect(() => {
+    if (open) mutate()
+  }, [open])
   const handleChange = (_: SyntheticEvent<Element, Event>, value: number) => {
     setTab(value)
   }
