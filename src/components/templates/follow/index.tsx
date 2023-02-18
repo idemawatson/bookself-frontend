@@ -2,6 +2,7 @@ import FollowerList from '@/components/organisms/follow/FollowerList'
 import FollowingList from '@/components/organisms/follow/FollowingList'
 import FollowingSearchDrawer from '@/components/organisms/follow/FollowingSearchDrawer'
 import FollowRequestList from '@/components/organisms/follow/FollowRequestList'
+import FollowSkeletonList from '@/components/organisms/follow/FollowSkeletonList'
 import { Box, Divider, Paper, Tab, Tabs } from '@mui/material'
 import { FC, Suspense, SyntheticEvent } from 'react'
 import { useFollowerTab } from './useFollowerTab'
@@ -42,7 +43,7 @@ const FollowTemplate: FC<Props> = () => {
         </Tabs>
         <Divider></Divider>
       </Paper>
-      <Suspense fallback={<div>Loading...</div>}>{renderFollower()}</Suspense>
+      <Suspense fallback={<FollowSkeletonList />}>{renderFollower()}</Suspense>
     </>
   )
 }

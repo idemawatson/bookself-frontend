@@ -45,7 +45,7 @@ const ProfilePaper: FC = () => {
           </>
         </StatusPaper>
         <StatusPaper title='読んだ本' value={`${user.bookCount}冊`} />
-        <StatusPaper title='総読書量' value={`${user.experience}ページ`} />
+        <StatusPaper title='総読書量' value={`${user.allPages}ページ`} />
       </Container>
     </>
   )

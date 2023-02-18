@@ -1,6 +1,7 @@
 export type ClientUser = ClientProfile & {
   restExperience: number
   bookCount: number
+  allPages: number
   progress: number
   followings: ClientProfile[]
   followers: ClientProfile[]
